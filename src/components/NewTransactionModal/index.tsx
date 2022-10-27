@@ -1,13 +1,19 @@
 import Modal from 'react-modal';
-import { Container } from './styles';
+import entradasImg from '../../assets/entradas.svg';
+import saidasImg from '../../assets/saidas.svg';
 import fecharImg from '../../assets/fechar.svg';
 
+import { Container, TransactionTypeContainer, RadioBox } from './styles';
+import { useState } from 'react';
 interface NewTransactionModalProps {
     isOpen: boolean;
     onRequestClose: () => void;
 }
 
 export function NewTransactionModal({ isOpen, onRequestClose }: NewTransactionModalProps) {
+
+    const [type, setType] = useState('deposit');
+
     return (
         <Modal
             isOpen={isOpen}
@@ -16,10 +22,10 @@ export function NewTransactionModal({ isOpen, onRequestClose }: NewTransactionMo
             className="react-modal-content"
         >
 
-            <button 
-            type="button" 
-            onClick={onRequestClose} 
-            className="react-modal-close"
+            <button
+                type="button"
+                onClick={onRequestClose}
+                className="react-modal-close"
             >
                 <img src={fecharImg} alt="Fechar modal" />
             </button>
@@ -35,6 +41,28 @@ export function NewTransactionModal({ isOpen, onRequestClose }: NewTransactionMo
                     type="number"
                     placeholder='Valor'
                 />
+
+                <TransactionTypeContainer>
+                    <RadioBox
+                        type='button'
+                        onClick={() => { setType('deposit'); }}
+                        isActive={type === 'deposit'}
+                        activeColor="green"
+                    >
+                        <img src={entradasImg} alt="Entrada" />
+                        <span>Entrada</span>
+                    </RadioBox>
+                    <RadioBox
+                        type='button'
+                        onClick={() => { setType('withdraw'); }}
+                        isActive={type === 'withdraw'}
+                        activeColor="red"
+                    >
+                        <img src={saidasImg} alt="Saida" />
+                        <span>Saida</span>
+                    </RadioBox>
+
+                </TransactionTypeContainer>
 
                 <input
                     placeholder='Categoria'
